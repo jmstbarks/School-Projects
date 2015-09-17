@@ -132,7 +132,7 @@ void test_rearranged_process_control_blocks_by_arrival_time() {
 	
 	for (size_t i = 0; i < 3; ++i) {
 		ProcessControlBlock_t* pcb = dyn_array_at(tester,i);
-		assert(pcb->arrivalTime == data[i].arrivalTime,227);
+		assert(pcb->arrivalTime == data[i].arrivalTime,135);
 	}
 
 	assert(rearranged_process_control_blocks_by_arrival_time(tester),138);
@@ -197,8 +197,8 @@ void run_FCFS_test () {
 	assert(stats.averageLatencyTime == 0,197);
 	dyn_array_t* tester = dyn_array_create(16,sizeof(ProcessControlBlock_t),NULL);
 	stats = first_come_first_served(tester);
-	assert(stats.averageWallClockTime == 0,201);
-	assert(stats.averageLatencyTime == 0,202);
+	assert(stats.averageWallClockTime == 0,200);
+	assert(stats.averageLatencyTime == 0,201);
 
 	ProcessControlBlock_t data[3] = {
 			[0] = {24,0,0,0},
@@ -211,8 +211,8 @@ void run_FCFS_test () {
 	create_suspended_processes_and_assign_pcbs(tester);
 	stats = first_come_first_served(tester);
 	float answers[2] = {27,17};
-	assert(stats.averageWallClockTime == answers[0],216);
-	assert(stats.averageLatencyTime == answers[1],217); 
+	assert(stats.averageWallClockTime == answers[0],214);
+	assert(stats.averageLatencyTime == answers[1],215); 
 	printf("AVG TURN AROUND TIME = %f\nAVG WAIT TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(tester);
 }
@@ -260,10 +260,10 @@ void run_SRTF_test () {
 	dyn_array_clear(tester);
 	
 	ProcessControlBlock_t data[4] = {
-			[0] = {8,0,0,0},
-			[1] = {4,1,0,0},
-			[2] = {9,2,0,0},
-			[3] = {5,3,0,0}
+			[3] = {8,0,0,0},
+			[2] = {4,1,0,0},
+			[1] = {9,2,0,0},
+			[0] = {5,3,0,0}
 	};
 	dyn_array_push_back(tester,&data[0]);
 	dyn_array_push_back(tester,&data[1]);
