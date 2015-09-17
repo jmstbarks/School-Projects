@@ -44,7 +44,7 @@ int main(int argc, char*argv[]) {
 			stats = round_robin(futureProcesses,5);
 		break;
 	}
-	printf("AVG TURN AROUND TIME = %f\nAVG WAIT TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
+	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(futureProcesses);
 	return 0;
 
