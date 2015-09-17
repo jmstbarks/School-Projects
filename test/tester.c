@@ -213,7 +213,7 @@ void run_FCFS_test () {
 	float answers[2] = {27,17};
 	assert(stats.averageWallClockTime == answers[0],214);
 	assert(stats.averageLatencyTime == answers[1],215); 
-	printf("AVG TURN AROUND TIME = %f\nAVG WAIT TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
+	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(tester);
 }
 
@@ -244,7 +244,7 @@ void run_SJF_test () {
 	float answers[2] = {13,7};
 	assert(stats.averageWallClockTime == answers[0],245);
 	assert(stats.averageLatencyTime == answers[1],246);
-	printf("AVG TURN AROUND TIME = %f\nAVG WAIT TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
+	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(tester);
 
 }
@@ -272,9 +272,9 @@ void run_SRTF_test () {
 	create_suspended_processes_and_assign_pcbs(tester);
 	stats = shortest_remaining_time_first(tester);
 	float answers[2] = {13,6.5};
-	assert(stats.averageWallClockTime == answers[0],252);
-	assert(stats.averageLatencyTime == answers[1],253);
-	printf("AVG TURN AROUND TIME = %f\nAVG WAIT TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
+	assert(stats.averageWallClockTime == answers[0],275);
+	assert(stats.averageLatencyTime == answers[1],276);
+	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(tester);
 
 }
@@ -301,7 +301,7 @@ void run_RR_test () {
 	float answers[2] = {15.67,5.67};
 	assert(stats.averageWallClockTime == answers[0],302);
 	assert(stats.averageLatencyTime == answers[1],303);
-	printf("AVG WALL CLOCK TIME = %f\nAVG WAIT TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
+	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(tester);
 
 }
