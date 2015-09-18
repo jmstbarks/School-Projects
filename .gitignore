@@ -1,3 +1,8 @@
+build/*
+
+# and in case you did something weird
+*/build/*
+
 # Object files
 *.o
 *.ko
