@@ -165,7 +165,7 @@ void test_fetch_new_processes() {
 	};
 	const size_t currentClockTime = 5;
 	// Bad input parameters
-	assert(fetch_new_processes(NULL,NULL,0) == false,1__LINE__);
+	assert(fetch_new_processes(NULL,NULL,0) == false,__LINE__);
 	// logic edge tests
 	dyn_array_t* newProcesses = dyn_array_create(16,sizeof(ProcessControlBlock_t),NULL); 
 	dyn_array_t* futureProcesses = dyn_array_import(data1,3,sizeof(ProcessControlBlock_t), NULL);  
@@ -194,7 +194,7 @@ void test_fetch_new_processes() {
 void run_FCFS_test () {
 	ScheduleStats_t stats = first_come_first_served(NULL);
 	assert(stats.averageWallClockTime == 0,__LINE__);
-	assert(stats.averageLatencyTime == 0,1__LINE__);
+	assert(stats.averageLatencyTime == 0,__LINE__);
 	dyn_array_t* tester = dyn_array_create(16,sizeof(ProcessControlBlock_t),NULL);
 	stats = first_come_first_served(tester);
 	assert(stats.averageWallClockTime == 0,__LINE__);
@@ -300,7 +300,7 @@ void run_RR_test () {
 	stats = round_robin(tester, 4);
 	float answers[2] = {15.67,5.67};
 	assert(stats.averageWallClockTime == answers[0],__LINE__);
-	assert(fabs(stats.averageLatencyTime,answers[1]) < .00001,__LINE__);
+	assert(fabs(stats.averageLatencyTime - answers[1]) < .00001,__LINE__);
 	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
 	dyn_array_destroy(tester);
 
