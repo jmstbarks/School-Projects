@@ -14,7 +14,7 @@ install(TARGETS process_scheduling DESTINATION lib)
 install(FILES include/processing_scheduling.h DESTINATION include)
 
 add_executable(ps_tester test/tester.c)
-target_link_libraries(ps_tester process_scheduling ${dyn_array_lib})
+target_link_libraries(ps_tester process_scheduling ${dyn_array_lib} m)
 
 add_executable(ps_analysis test/analysis.c)
 target_link_libraries(ps_analysis process_scheduling ${dyn_array_lib})
