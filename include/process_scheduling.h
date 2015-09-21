@@ -13,7 +13,7 @@ typedef struct {
 
 typedef struct {
 	float averageWallClockTime; // The average amount of time to complete a process
-	float averageLatencyTime; // The delay between being first activated on the cpu
+	float averageLatencyTime; // The average delay between being activated on the cpu from the ready queue
 	size_t totalClockRuntime; // The final time of all processes
 } ScheduleStats_t;
 
