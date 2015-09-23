@@ -172,14 +172,14 @@ void test_fetch_new_processes() {
 	assert(fetch_new_processes(newProcesses,futureProcesses,0) == true,__LINE__);
 	assert(dyn_array_size(newProcesses) == 3,__LINE__); 
 	assert(dyn_array_size(futureProcesses) == 0,__LINE__);
-	dyn_array_clear(futureProcesses);
+	dyn_array_destroy(futureProcesses);
 	dyn_array_clear(newProcesses);
 
 	futureProcesses = dyn_array_import(data2,3,sizeof(ProcessControlBlock_t),NULL); 
 	assert(fetch_new_processes(newProcesses,futureProcesses,currentClockTime) == true,__LINE__);
 	assert(dyn_array_size(newProcesses) == 2,__LINE__);
 	assert(dyn_array_size(futureProcesses) == 1, __LINE__);
-	dyn_array_clear(futureProcesses);
+	dyn_array_destroy(futureProcesses);
 	dyn_array_clear(newProcesses);
 
 	futureProcesses = dyn_array_import(data3,3,sizeof(ProcessControlBlock_t),NULL); 
