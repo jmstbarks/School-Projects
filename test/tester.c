@@ -271,7 +271,7 @@ void run_SRTF_test () {
 	dyn_array_push_back(tester,&data[3]);
 	create_suspended_processes_and_assign_pcbs(tester);
 	stats = shortest_remaining_time_first(tester);
-	float answers[2] = {13,6.5};
+	float answers[2] = {13,4.25};
 	assert(stats.averageWallClockTime == answers[0],__LINE__);
 	assert(stats.averageLatencyTime == answers[1],__LINE__);
 	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
@@ -298,7 +298,7 @@ void run_RR_test () {
 	dyn_array_push_back(tester,&data[2]);
 	create_suspended_processes_and_assign_pcbs(tester);
 	stats = round_robin(tester, 4);
-	float answers[2] = {15.67,5.67};
+	float answers[2] = {15.666667,3.666667};
 	assert(stats.averageWallClockTime == answers[0],__LINE__);
 	assert(fabs(stats.averageLatencyTime - answers[1]) < .00001,__LINE__);
 	printf("AVG WALL CLOCK TIME = %f\nAVG LATENCY TIME = %f\n", stats.averageWallClockTime, stats.averageLatencyTime);
