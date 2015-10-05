@@ -18,3 +18,6 @@ target_link_libraries(ps_tester process_scheduling ${dyn_array_lib} m)
 
 add_executable(ps_analysis test/analysis.c)
 target_link_libraries(ps_analysis process_scheduling ${dyn_array_lib})
+
+set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Werror -O3")
+add_executable(pcb_generator src/pcb_generator.cpp)
