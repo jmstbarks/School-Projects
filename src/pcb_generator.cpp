@@ -66,10 +66,10 @@ int main (int argc, char** argv) {
 	std::ofstream outFile;
 	outFile.open(binaryFile.c_str(), std::ios::out | std::ios::trunc | std::ios::binary);
 
-	size_t bytesToWrite = (sizeof(ProcessControlBlock) * pcb.size()) + sizeof(size_t);
+	size_t bytesToWrite = (sizeof(ProcessControlBlock) * pcb.size()) + sizeof(uint32_t);
 	char* buffer = new char[bytesToWrite];
-	memcpy(buffer,&numsOfPCBs,sizeof(size_t));
-	memcpy(buffer + sizeof(size_t),pcb.data(),sizeof(ProcessControlBlock) * pcb.size());
+	memcpy(buffer,&numsOfPCBs,sizeof(uint32_t));
+	memcpy(buffer + sizeof(uint32_t),pcb.data(),sizeof(ProcessControlBlock) * pcb.size());
 	outFile.write(buffer,bytesToWrite);
 	outFile.close();
 
