@@ -5,10 +5,10 @@
 #include <stdbool.h>
 
 typedef struct {
-	size_t burstTime; // CPU runtime for Process
-	size_t arrivalTime; // The time the process comes into the scheduler
-	pid_t pid; // Used to bind a running process with a PCB
-	bool activated; // Finally reached the CPU
+	uint32_t burstTime; // CPU runtime for Process
+	uint32_t arrivalTime; // The time the process comes into the scheduler
+	int32_t pid; // Used to bind a running process with a PCB
+	uint32_t activated; // Finally reached the CPU
 } ProcessControlBlock_t;
 
 typedef struct {
