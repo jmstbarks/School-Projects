@@ -14,7 +14,7 @@ int main(int argc, char*argv[]) {
 	}
 	char* pEnd = NULL;
 	const size_t scheduleAlgorithm = strtol(argv[2],&pEnd,10);
-	if (scheduleAlgorithm < 0 || scheduleAlgorithm > 4) {
+	if (scheduleAlgorithm < 1 || scheduleAlgorithm > 4) {
 		printf("SCHEDULE ALGORITHMS:\n\n \
 				1)FIRST COME FIRST SERVED\n \
 				2)SHORTEST JOB FIRST\n \
