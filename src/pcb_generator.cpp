@@ -32,7 +32,7 @@ int main (int argc, char** argv) {
 	std::default_random_engine gen(seedValue);
 	std::normal_distribution<double> normalDistribution(15.0,4.0);
 
-	std::uniform_int_distribution<size_t> uniformDistribution(0,30);
+	std::uniform_int_distribution<size_t> uniformDistribution(1,30);
 	
 	size_t i = 0;
 
