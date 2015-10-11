@@ -107,6 +107,7 @@ void test_create_suspended_processes_and_assign_pcbs() {
 	for (size_t i = 0; i < 3; ++i) {
 		ProcessControlBlock_t* pcb = dyn_array_at(tester,i);
 		assert((pcb->pid),__LINE__);
+		kill(pcb->pid,SIGKILL);
 	}	
 	
 	dyn_array_destroy(tester);
