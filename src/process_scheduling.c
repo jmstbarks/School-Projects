@@ -122,7 +122,7 @@ const bool fetch_new_processes(dyn_array_t* newProcesses, dyn_array_t* futurePro
 		
 			if(pcb->arrivalTime <= currentClockTime){
 				dyn_array_push_back(newProcesses, pcb);
-				dyn_array_extract_back(newProcesses, pcb);
+				dyn_array_extract_back(futureProcesses, pcb);
 			}
 
 			
@@ -162,7 +162,7 @@ const bool load_process_control_blocks_from_file(dyn_array_t* futureProcesses, c
 
 	pcbFile = fopen(binaryFileName,"rb");
 
-	fread(numProcs, sizeof(int), 1, pcbFile);
+	fread(numProcs, sizeof(size_t), 1, pcbFile);
 	
 		for(i=0; i<numProcs[0]; i++){
 
