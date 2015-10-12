@@ -6,9 +6,9 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <stdbool.h>
-
-#include "../include/process_scheduling.h"
 #include <dyn_array.h>
+#include "../include/process_scheduling.h"
+
 
 
 const ScheduleStats_t first_come_first_served(dyn_array_t* futureProcesses) {
@@ -35,11 +35,40 @@ const ScheduleStats_t round_robin(dyn_array_t* futureProcesses, const size_t qua
 
 
 const bool create_suspended_processes_and_assign_pcbs(dyn_array_t* futureProcesses){
+
+	int pid; 
+
+
+	for (size_t i = 0; i < dyn_array_data_size(futureProcesses); ++i) {
+		pid = fork();
+		ProcessControlBlock_t* pcb = dyn_array_at(futureProcesses,i);
+		pcb->pid = pid;
+		kill(pcb->pid,SIGSTOP);
+	}	
+
 	return false; 
 }
 
 
 const bool fetch_new_processes(dyn_array_t* newProcesses, dyn_array_t* futureProcesses, const size_t currentClockTime) {
+
+	int i, j=0;
+
+
+	for (i = 0; i < dyn_array_data_size(futureProcesses); ++i) {
+		ProcessControlBlock_t* pcb = dyn_array_at(futureProcesses,i);
+		
+			if(pcb->arrivalTime <= currentClockTime){
+				dyn_array_insert(newProcesses, j, pcb);
+				j++;
+			}
+
+			
+	}
+
+	
+
+
 	return false;
 }
 
@@ -63,10 +92,88 @@ void virtual_cpu(ProcessControlBlock_t* runningProcess) {
 
 const bool load_process_control_blocks_from_file(dyn_array_t* futureProcesses, const char* binaryFileName)
 {
-	return false;
+
+	FILE *pcbFile;
+	int i, numProcs[1], pcbData[100];
+	ProcessControlBlock_t *newPCB = malloc(sizeof(ProcessControlBlock_t ));
+
+
+	pcbFile = fopen(binaryFileName,"rb");
+
+	fread(numProcs, sizeof(int), 1, pcbFile);
+	
+		for(i=0; i<numProcs[0]; i++){
+
+			fread(&pcbData, sizeof(int), 4, pcbFile);
+			
+			newPCB->burstTime = pcbData[0];
+			newPCB->arrivalTime = pcbData[1];
+			newPCB->pid = pcbData[2];
+			newPCB->activated = pcbData[3];
+
+			dyn_array_push_back(futureProcesses,&newPCB);
+			
+			
+			memset(pcbData, 0, 4*sizeof(*pcbData));
+
+			  	}
+
+	if(futureProcesses != NULL){
+		return true;
+
+	}
+	
+		return false;
+}
+
+int compare(const void* a, const void *b) {
+	const size_t aValue = ((ProcessControlBlock_t*)a)->pid;
+	const size_t bValue = ((ProcessControlBlock_t*)b)->pid;
+	return bValue - aValue;
+} 
+
+const bool rearranged_process_control_blocks_by_arrival_time(dyn_array_t* futureProcesses) {
+
+	ProcessControlBlock_t pcb;	
+	dyn_array_sort(futureProcesses,&compare);
+
+
+	dyn_array_insert_sorted(futureProcesses,&pcb,&compare);
+
+
+
+	return true;
+} 
+
+
+int main(int argc, char*argv[]) {
+
+int currentClockTime = 0;
+ScheduleStats_t *stats = malloc(sizeof(ScheduleStats_t));
+dyn_array_t* futureProcesses = dyn_array_create(0,sizeof(ProcessControlBlock_t),NULL);
+dyn_array_t* newProcesses = dyn_array_create(16,sizeof(ProcessControlBlock_t),NULL); 
+
+if(!load_process_control_blocks_from_file(futureProcesses, argv[1])){
+	return 0;
+}
+
+if(create_suspended_processes_and_assign_pcbs(futureProcesses)){
+	return 0;
+}
+
+if(!rearranged_process_control_blocks_by_arrival_time(futureProcesses)){
+	return 0;
+}
+
+while(dyn_array_empty(futureProcesses) == false){
+	++currentClockTime;
+	 fetch_new_processes(newProcesses,futureProcesses, currentClockTime);
+	 stats = first_come_first_served(newProcesses);
+
+
 
 }
 
-const bool rearranged_process_control_blocks_by_arrival_time(dyn_array_t* futureProcesses) {
-	return true;
-}  
+
+return 0;
+}
