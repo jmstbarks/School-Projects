@@ -3,6 +3,7 @@
 #include <dyn_array.h>
 #include <string.h>
 #include <math.h>
+#include <signal.h>
 
 #include "../include/process_scheduling.h"
 
