@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
         std::mt19937 generator(seed);
         std::uniform_int_distribution<uint32_t> uni_distrib(0, 2047);
-        std::normal_distribution<double> norm_distrib(1024, 75); // ~ 799 - 1249
+        std::normal_distribution<double> norm_distrib(1024, 10); // ~ 914-1054
 
         // "Fun" fact: Mersenne Twister implementation is defined, so it's consistent across platforms.
         // The distributions are not, so your numbers will still come out weird if you use them to
