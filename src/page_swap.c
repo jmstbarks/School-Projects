@@ -44,7 +44,7 @@ void destroy_frame_list(void) {
 }
 
 /*
- * TODO COMPLETE ALL THE FOLLOWING FOR EACH FUNCTION: LOGIC and DOCUMENATION 
+ * TODO COMPLETE ALL THE FOLLOWING FOR EACH FUNCTION: LOGIC and DOCUMENTATION 
  */
  
 PageAlgorithmResults* least_recently_used(const uint32_t pageNumber) {
