@@ -19,8 +19,10 @@ typedef struct {
 }FrameTable_t;
 
 
-typedef struct {
+// TODO CREATE A Page_t Structure
 
+typedef struct {
+	// TODO COMPLETE THIS STRUCTURE
 	// An array of pages
 	// Number of Page entires
 
