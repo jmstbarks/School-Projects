@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 project (page_swap)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -std=c99 -D_XOPEN_SOURCE=500 -Wall")
+set(CMAKE_C_FLAGS "-g -std=c99 -Werror")
 
 find_library(blockstore_lib block_store)
 find_library(dyn_array_lib dyn_array)
@@ -15,5 +15,5 @@ install(FILES include/page_swap.h DESTINATION include)
 add_executable(runner test/runner.c)
 target_link_libraries(runner page_swap ${dyn_array_lib})
 
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror -O3")
+set(CMAKE_CXX_FLAGS "-std=c++0x -Werror -O3")
 add_executable(page_generator src/page_generator.cpp)
