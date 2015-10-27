@@ -65,7 +65,7 @@ int main (int argc, char **argv) {
 		}
 	}
 
-	printf("\n\nTotal Page Faults = %lu\n", pageFaults);
+	printf("\n\nTotal Page Faults = %zu\n", pageFaults);
 
 	printf("------------------------------------\n");
 
@@ -95,7 +95,7 @@ int main (int argc, char **argv) {
 		}
 	}
 
-	printf("\n\nTotal Page Faults = %lu\n", pageFaults);
+	printf("\n\nTotal Page Faults = %zu\n", pageFaults);
 	printf("------------------------------------\n");
 
 	destroy_back_store();
