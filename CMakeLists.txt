@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 project (page_swap)
 
+set(CMAKE_OSX_SYSROOT "/")
 set(CMAKE_C_FLAGS "-g -std=c99 -Werror")
 
 find_library(blockstore_lib block_store)
