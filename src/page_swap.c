@@ -67,7 +67,32 @@ bool write_to_back_store (/*???? TODO: add your parameters*/) {
 }
 
 dyn_array_t* read_page_requests ( const char* const filename) {
-	return NULL;
+
+	FILE *prFile = fopen(filename,"rb");
+	int i, numPages[1];
+	
+	dyn_array_t* page_requests = NULL;
+
+	fread(numPages, sizeof(int), 1, prFile);
+
+	int *prData = malloc(sizeof(int)*numPages[0]);
+	
+	page_requests = dyn_array_create(0,sizeof(int),NULL);
+	
+	int *requests_array = malloc(sizeof(int)*numPages[0]);
+
+	Page_t *newPage = malloc(sizeof(Page_t));
+
+		for(i=0; i<numPages[0]; i++){
+
+			fread(&prData[i], sizeof(prData[i]), 1, prFile);
+			requests_array[i] = prData[0];
+
+		}
+
+	page_requests = dyn_array_import(requests_array, numPages[0], sizeof(int), NULL);
+	
+	return page_requests;
 }
 
 bool initialize (void) {
@@ -76,17 +101,25 @@ bool initialize (void) {
 	memset(&frameTable,0,sizeof(FrameTable_t));
 	memset(&pageTable,0,sizeof(PageTable_t));
 
+	Page_t* newPage = malloc(sizeof(Page_t ));
 	/* Fill the Page Table from 0 to 512*/
-	for (;;) {
-		
+	for (int i = 0; i < 512; ++i) {
+		pageTable.entries[i] = *newPage;
 	}
+	pageTable.size = 512;
 
 	/* Fill the entire Frame Table with correct values*/
-	for (;;) {
 	
+	for (int i = 0; i < 512; ++i) {
+		Frame_t* newFrame = malloc(sizeof(Frame_t));
+		newFrame->pageTableIdx = i;
+		frameTable.entries[i] = *newFrame; 
 	}
+	frameTable.size = 512;
 
-	return false;
+		if(pageTable.entries == NULL || pageTable.size == 0 || frameTable.entries == NULL || frameTable.size == 0)
+			return false;
+
+	return true;
 	
-
 }

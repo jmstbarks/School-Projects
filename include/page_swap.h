@@ -20,12 +20,16 @@ typedef struct {
 
 
 // TODO CREATE A Page_t Structure
+typedef struct{
+	unsigned int data;
+}Page_t;
 
-typedef struct {
+typedef struct{
 	// TODO COMPLETE THIS STRUCTURE
 	// An array of pages
+	Page_t entries[MAX_PAGE_TABLE_ENTRIES_SIZE];
 	// Number of Page entires
-
+	unsigned int size;
 }PageTable_t;
 
 
