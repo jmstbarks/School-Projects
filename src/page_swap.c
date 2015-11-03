@@ -51,12 +51,20 @@ PageAlgorithmResults* least_recently_used(const uint32_t pageNumber) {
 
 	int least_used_page;
 	PageAlgorithmResults* pageResults = NULL;
+	for(int i=0; i<pageTable.size; i++){
+		if(pageTable.entries[i].frame == pageNumber){
 
-	for(int i=0; i<frameTable.size; i++){
-		if(frameTable.entries[i].pageTableIdx == pageNumber){
+			if(!dyn_array_pop_front(frameIdxList)){
+				printf("works");
+				return NULL;
+			}
+	
+			if(!dyn_array_push_back(frameIdxList, &pageNumber)){
+				return NULL;
+		
+			}
 			return pageResults;
 		}
-		
 	}
 
 	if(!dyn_array_extract_front(frameIdxList, &least_used_page)){
@@ -66,17 +74,17 @@ PageAlgorithmResults* least_recently_used(const uint32_t pageNumber) {
 		return NULL;
 	}
 
-	if(!write_to_back_store(blockStore, frameTable, &least_used_page)){
+	if(!write_to_back_store(blockStore, frameTable.entries[least_used_page], &least_used_page)){
 		return NULL;
 	}
 
-	if(!read_from_back_store(blockStore, frameTable, pageNumber)){
+	if(!read_from_back_store(blockStore, frameTable.entries[pageNumber], pageNumber)){
 		return NULL;
 	}
 
 	pageResults->pageRequested = pageNumber;
 	pageResults->frameReplaced = least_used_page;
-	pageResults->pageReplaced = least_used_page;
+	pageResults->pageReplaced = frameTable.entries[least_used_page].pageTableIdx;
 
 
 	return pageResults;
@@ -87,17 +95,17 @@ PageAlgorithmResults* approx_least_recently_used (const uint32_t pageNumber, con
 	return pageResults;
 }
 
-bool read_from_back_store (block_store_t* blockStore, FrameTable_t frameTable, uint32_t pageNumber) {
-	if(block_store_read(blockStore, pageNumber, &frameTable, sizeof(frameTable), 0) == 0){
+bool read_from_back_store (block_store_t* blockStore, Frame_t frame, uint32_t pageNumber) {
+	if(block_store_read(blockStore, pageNumber, &frame, sizeof(frameTable), 8) == 0){
 	 	return false;
 	 }
 
 	 return true;
 }
 
-bool write_to_back_store (block_store_t* blockStore, FrameTable_t frameTable, uint32_t pageNumber) {
+bool write_to_back_store (block_store_t* blockStore, Frame_t frame, uint32_t pageNumber) {
 
-	 if(block_store_write(blockStore, pageNumber, &frameTable, sizeof(frameTable), 0) == 0){
+	 if(block_store_write(blockStore, pageNumber, &frame, sizeof(frameTable), 8) == 0){
 	 	return false;
 	 }
 
@@ -136,34 +144,29 @@ bool initialize (void) {
 	memset(&frameTable,0,sizeof(FrameTable_t));
 	memset(&pageTable,0,sizeof(PageTable_t));
 
-	Page_t* newPage = malloc(sizeof(Page_t ));
 	/* Fill the Page Table from 0 to 512*/
 	for (int i = 0; i < 512; ++i) {
-		pageTable.entries[i] = *newPage;
-		block_store_request(blockStore, i);
+		pageTable.entries[i].frame = i;
+		pageTable.entries[i].valid = 1;
+		pageTable.size++;
 
-
-		if(!dyn_array_insert(frameIdxList, i, &i)){
-			return NULL;
-		}	
-	
-	}
-	pageTable.size = 512;
-
-
-	/* Fill the entire Frame Table with correct values*/
-	
-	for (int i = 0; i < 512; ++i) {
-		Frame_t* newFrame = malloc(sizeof(Frame_t));
-		newFrame->pageTableIdx = i;
-		frameTable.entries[i] = *newFrame; 
-	}
-
-	frameTable.size = 512;
-
-		if(pageTable.size == 0 || frameTable.size == 0)
+		frameTable.entries[i].pageTableIdx= i;
+		frameTable.size++;
+		
+		if(block_store_read(blockStore, i, &frameTable.entries[i].data, sizeof(frameTable), 8)){
 			return false;
+		}
+			
+		if(!dyn_array_insert(frameIdxList, i, &i)){
+			return false;
+		}
 
+		for (int i = 0; i < 512; ++i) {
+		int32_t* pageNumber = (uint32_t*) dyn_array_at(frameIdxList,i);
+		//printf("%u", *pageNumber);
+		}
+		
+	}
 	return true;
 	
 }

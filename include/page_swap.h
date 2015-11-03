@@ -21,11 +21,12 @@ typedef struct {
 
 // TODO CREATE A Page_t Structure
 typedef struct{
-	unsigned int data;
+	unsigned short frame; // frame index/address
+	int valid;
 }Page_t;
 
 typedef struct{
-	// TODO COMPLETE THIS STRUCTURE
+	// TODO COMPLETE THIS STRUCTURE;
 	// An array of pages
 	Page_t entries[MAX_PAGE_TABLE_ENTRIES_SIZE];
 	// Number of Page entires

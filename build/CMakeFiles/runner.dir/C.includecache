@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/barksdale/OSF15_Exercise3/include/page_swap.h
+/home/james/OSF15_Exercise3/include/page_swap.h
 stdbool.h
 -
 
-/home/barksdale/OSF15_Exercise3/test/runner.c
+/home/james/OSF15_Exercise3/test/runner.c
 stdio.h
 -
 string.h
@@ -24,5 +24,5 @@ time.h
 dyn_array.h
 -
 ../include/page_swap.h
-/home/barksdale/OSF15_Exercise3/include/page_swap.h
+/home/james/OSF15_Exercise3/include/page_swap.h
 
