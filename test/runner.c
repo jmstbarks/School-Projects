@@ -19,6 +19,7 @@ int main (int argc, char **argv) {
 	PageAlgorithmResults* results = NULL;	
 	dyn_array_t* pageRequests = NULL;
 	pageRequests = read_page_requests (argv[1]);
+
 	if (!pageRequests) {	
 		printf("ERROR: FAILED TO FILL IN PAGE REQUESTS\n");
 		return -1;
@@ -68,7 +69,7 @@ int main (int argc, char **argv) {
 	printf("\n\nTotal Page Faults = %zu\n", pageFaults);
 
 	printf("------------------------------------\n");
-
+		return 0;
 	/*
 	 * TESTING LRU APPOX PAGE SWAP ALGORITHM
 	 **/
