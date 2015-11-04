@@ -50,7 +50,7 @@ int main (int argc, char **argv) {
 
 	const size_t size = dyn_array_size(pageRequests);
 	size_t pageFaults = 0;
-	/*for (int i = 0; i < size; ++i) {
+	for (int i = 0; i < size; ++i) {
 		uint32_t* pageNumber = (uint32_t*) dyn_array_at(pageRequests,i);
 		results = least_recently_used (*pageNumber);
 		if(results) {
@@ -68,7 +68,7 @@ int main (int argc, char **argv) {
 
 	printf("\n\nTotal Page Faults = %zu\n", pageFaults);
 	return 0;
-	printf("------------------------------------\n");*/
+	printf("------------------------------------\n");
 		
 	/*
 	 * TESTING LRU APPOX PAGE SWAP ALGORITHM

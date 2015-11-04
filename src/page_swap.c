@@ -104,6 +104,7 @@ PageAlgorithmResults* approx_least_recently_used (const uint32_t pageNumber, con
 	}
 	
 	unsigned char minVal = frameTable.entries[0].accessTrackingByte;
+	
 	for(int i=0; i<frameTable.size; i++){
 
 		int result = memcmp(&frameTable.entries[i].accessTrackingByte, &minVal, sizeof(unsigned char));//FInd the frame with the minimum acessTrackingByte to use as the victim frame
@@ -111,9 +112,7 @@ PageAlgorithmResults* approx_least_recently_used (const uint32_t pageNumber, con
 				min_bit_idx = i;
 				minVal = frameTable.entries[i].accessTrackingByte;
 			}
-
-		
-		}
+	}
 	
 
 	pageResults->pageRequested = pageNumber;			//store results 
@@ -128,8 +127,7 @@ PageAlgorithmResults* approx_least_recently_used (const uint32_t pageNumber, con
 	if(!read_from_back_store(blockStore, &frameTable.entries[min_bit_idx], pageNumber)){//read in the newly requested frame
 		return NULL;
 	}
-		//unsigned char bit_set = 1;
-		//	frameTable.entries[pageNumber].accessBit = bit_set;
+		frameTable.entries[min_bit_idx].accessBit |= (1<<0);//set accessBit
 		
 	
 
