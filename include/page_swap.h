@@ -1,6 +1,6 @@
 #ifndef _PAGE_SWAP_H_
 #define _PAGE_SWAP_H_
-
+#include <block_store.h>
 #include <stdbool.h>
 
 #define MAX_PAGE_TABLE_ENTRIES_SIZE 2048
@@ -26,7 +26,6 @@ typedef struct{
 }Page_t;
 
 typedef struct{
-	// TODO COMPLETE THIS STRUCTURE;
 	// An array of pages
 	Page_t entries[MAX_PAGE_TABLE_ENTRIES_SIZE];
 	// Number of Page entires
@@ -53,9 +52,9 @@ PageAlgorithmResults* least_recently_used(const uint32_t pageNumber);
 
 PageAlgorithmResults* approx_least_recently_used (const uint32_t pageNumber, const size_t timeInterval);
 
-bool read_from_back_store (/*?????? TODO: add your parameters*/);
+bool read_from_back_store (block_store_t* blockStore, Frame_t *frame, uint32_t pageNumber);
 
-bool write_to_back_store (/*???? TODO: add your parameters*/);
+bool write_to_back_store (block_store_t* blockStore, Frame_t *frame, uint32_t pageNumber);
 
 dyn_array_t* read_page_requests (const char* const filename);
 

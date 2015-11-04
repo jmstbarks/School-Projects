@@ -50,10 +50,10 @@ int main (int argc, char **argv) {
 
 	const size_t size = dyn_array_size(pageRequests);
 	size_t pageFaults = 0;
-	for (int i = 0; i < size; ++i) {
+	/*for (int i = 0; i < size; ++i) {
 		uint32_t* pageNumber = (uint32_t*) dyn_array_at(pageRequests,i);
 		results = least_recently_used (*pageNumber);
-		/*if(results) {
+		if(results) {
 			printf("%u)PAGE FAULT: Page Requested = %u, Frame Replaced = %u, Page Replaced = %u\n",i,
 					results->pageRequested,results->frameReplaced,results->pageReplaced);
 			free(results);
@@ -63,16 +63,17 @@ int main (int argc, char **argv) {
 		else {
 			printf("NOT PAGE FAULT OCCURED\n\n");
 
-		}*/
+		}
 	}
 
 	printf("\n\nTotal Page Faults = %zu\n", pageFaults);
-
-	printf("------------------------------------\n");
-		return 0;
+	return 0;
+	printf("------------------------------------\n");*/
+		
 	/*
 	 * TESTING LRU APPOX PAGE SWAP ALGORITHM
 	 **/
+
 	printf("APPROX LRU PAGE SWAP ALGORITHM\n");
 	printf("------------------------------------\n");
 
