@@ -49,43 +49,46 @@ void destroy_frame_list(void) {
  
 PageAlgorithmResults* least_recently_used(const uint32_t pageNumber) {
 
-	int least_used_page;
-	PageAlgorithmResults* pageResults = NULL;
+	int *least_used_page, *found_page;
+	PageAlgorithmResults* pageResults;
 	for(int i=0; i<pageTable.size; i++){
-		if(pageTable.entries[i].frame == pageNumber){
-
-			if(!dyn_array_pop_front(frameIdxList)){
-				printf("works");
+		if(pageTable.entries[i].frame.pageTableIdx == pageNumber){
+			
+			if(!dyn_array_extract(frameIdxList, i, found_page)){
 				return NULL;
 			}
+			
 	
-			if(!dyn_array_push_back(frameIdxList, &pageNumber)){
+			if(!dyn_array_push_back(frameIdxList, found_page)){
 				return NULL;
-		
 			}
-			return pageResults;
+			
+			return pageResults = NULL;
 		}
 	}
 
-	if(!dyn_array_extract_front(frameIdxList, &least_used_page)){
+	if(!dyn_array_extract_front(frameIdxList, least_used_page)){
 		return NULL;
 	}
-	if(!dyn_array_push_back(frameIdxList, &pageNumber)){
-		return NULL;
-	}
-
-	if(!write_to_back_store(blockStore, frameTable.entries[least_used_page], &least_used_page)){
-		return NULL;
-	}
-
-	if(!read_from_back_store(blockStore, frameTable.entries[pageNumber], pageNumber)){
+	
+	//printf("%d\n", *least_used_page);
+	if(!write_to_back_store(blockStore, &frameTable.entries[*least_used_page], *least_used_page)){
 		return NULL;
 	}
 
+	if(!read_from_back_store(blockStore, &frameTable.entries[*least_used_page], pageNumber)){
+		return NULL;
+	}
+
+	if(!dyn_array_push_back(frameIdxList, &frameTable.entries[least_used_page]){
+		return NULL;
+	}
+/*
 	pageResults->pageRequested = pageNumber;
-	pageResults->frameReplaced = least_used_page;
-	pageResults->pageReplaced = frameTable.entries[least_used_page].pageTableIdx;
+	pageResults->frameReplaced = *least_used_page;
+	pageResults->pageReplaced = frameTable.entries[*least_used_page].pageTableIdx;
 
+*/
 
 	return pageResults;
 }
@@ -95,8 +98,8 @@ PageAlgorithmResults* approx_least_recently_used (const uint32_t pageNumber, con
 	return pageResults;
 }
 
-bool read_from_back_store (block_store_t* blockStore, Frame_t frame, uint32_t pageNumber) {
-	if(block_store_read(blockStore, pageNumber, &frame, sizeof(frameTable), 8) == 0){
+bool read_from_back_store (block_store_t* blockStore, Frame_t *frame, uint32_t pageNumber) {
+	if(block_store_read(blockStore, pageNumber, frame.pageTableIdx, sizeof(frame), 8) == 0){
 	 	return false;
 	 }
 
@@ -104,11 +107,10 @@ bool read_from_back_store (block_store_t* blockStore, Frame_t frame, uint32_t pa
 }
 
 bool write_to_back_store (block_store_t* blockStore, Frame_t frame, uint32_t pageNumber) {
-
-	 if(block_store_write(blockStore, pageNumber, &frame, sizeof(frameTable), 8) == 0){
+	 printf("%u\n", pageNumber);
+	 if(block_store_write(blockStore, pageNumber, frame.pageTableIdx, sizeof(frame), 8) == 0){
 	 	return false;
 	 }
-
 	 return true;
 }
 
@@ -153,7 +155,7 @@ bool initialize (void) {
 		frameTable.entries[i].pageTableIdx= i;
 		frameTable.size++;
 		
-		if(block_store_read(blockStore, i, &frameTable.entries[i].data, sizeof(frameTable), 8)){
+		if(block_store_read(blockStore, i, &frameTable.entries[i].data, sizeof(Frame_t), 8)){
 			return false;
 		}
 			
@@ -161,12 +163,19 @@ bool initialize (void) {
 			return false;
 		}
 
-		for (int i = 0; i < 512; ++i) {
-		int32_t* pageNumber = (uint32_t*) dyn_array_at(frameIdxList,i);
-		//printf("%u", *pageNumber);
-		}
 		
 	}
+
+
+		for (int i = 0; i < 512; ++i) {
+		//int *pageNumber = (dyn_array_at(frameIdxList,i));
+		
+		}
+		/*int least_used_page;
+		if(!dyn_array_extract_front(frameIdxList, &least_used_page)){
+		return NULL;
+		}
+		printf("%d\n", least_used_page);*/
 	return true;
 	
 }

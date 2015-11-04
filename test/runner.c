@@ -24,7 +24,7 @@ int main (int argc, char **argv) {
 		printf("ERROR: FAILED TO FILL IN PAGE REQUESTS\n");
 		return -1;
 	}
-	
+
 	if(!initialize_back_store ()){
 		printf("ERROR: FAILED TO INIT BACK STORE");
 		return -1;
@@ -47,13 +47,13 @@ int main (int argc, char **argv) {
 		printf("ERROR: FAILED TO INIT FRAME TABLE AND PAGE TABLE\n\n");
 		return -1;
 	}
-	return 0;
+
 	const size_t size = dyn_array_size(pageRequests);
 	size_t pageFaults = 0;
 	for (int i = 0; i < size; ++i) {
 		uint32_t* pageNumber = (uint32_t*) dyn_array_at(pageRequests,i);
 		results = least_recently_used (*pageNumber);
-		if(results) {
+		/*if(results) {
 			printf("%u)PAGE FAULT: Page Requested = %u, Frame Replaced = %u, Page Replaced = %u\n",i,
 					results->pageRequested,results->frameReplaced,results->pageReplaced);
 			free(results);
@@ -63,7 +63,7 @@ int main (int argc, char **argv) {
 		else {
 			printf("NOT PAGE FAULT OCCURED\n\n");
 
-		}
+		}*/
 	}
 
 	printf("\n\nTotal Page Faults = %zu\n", pageFaults);
