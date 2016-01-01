@@ -53,6 +53,7 @@ int main (int argc, char** argv) {
 	* PRE-TESTS FOR VERIFICATION OF CORRECTNESS
 	*
 	**/
+	
 	switch(scheduleAlgorithm) {
 		case 1:
 			run_FCFS_test();
@@ -67,7 +68,7 @@ int main (int argc, char** argv) {
 			run_RR_test();
 		break;
 	}
-
+	
 	return 0;
 
 }
@@ -128,7 +129,7 @@ void test_rearranged_process_control_blocks_by_arrival_time() {
 		[2] = {14,0,0,0}
 	};
 
-
+t
 	dyn_array_t* tester = dyn_array_import(data,3,sizeof(ProcessControlBlock_t),NULL);
 	assert(rearranged_process_control_blocks_by_arrival_time(NULL) == false,__LINE__);
 	
