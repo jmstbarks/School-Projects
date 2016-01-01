@@ -1,3 +1,0 @@
-/home/barksdale/OSF15_Exercise3/build/CMakeFiles/page_generator.dir
-/home/barksdale/OSF15_Exercise3/build/CMakeFiles/page_swap.dir
-/home/barksdale/OSF15_Exercise3/build/CMakeFiles/runner.dir

@@ -163,28 +163,24 @@ bool write_to_back_store (block_store_t* blockStore, Frame_t *frame, uint32_t pa
 
 dyn_array_t* read_page_requests ( const char* const filename) {
 
-	FILE *prFile = fopen(filename,"rb");
-	int i, numPages[1];											//Allocate memory, valgrind hates this entire function but still reads the binary file
-	
-	fread(numPages, sizeof(int), 1, prFile);//Get size of file
+	int prFile = open(filename, O_RDONLY);
+	int numPages[1];											
+
+	read(prFile, numPages, sizeof(int));//Get size of file
 
 	int size = numPages[0];
-	dyn_array_t* page_requests = malloc(size*sizeof(int)+1);
 	int prData[size]; 
-	
-	page_requests = dyn_array_create(size ,size*sizeof(int)+1,NULL);
 	int returnArray[size];
 
-	for(i=0; i<size; i++){//fill array with file contents
+	for(int i=0; i<size; i++){//fill array with file contents
 
-			fread(&prData, sizeof(int), 1, prFile);
-			
-			returnArray[i] = prData[0];
-			}
+		read(prFile, prData, sizeof(int));
+		returnArray[i] = prData[0];
+	}
 	
-	page_requests = dyn_array_import(returnArray, size, sizeof(int), NULL);//import that array into page requests
+	dyn_array_t* page_requests = dyn_array_import(returnArray, size, sizeof(int), NULL);//import that array into page requests
 
-	fclose(prFile);
+	close(prFile);
 	
 	return page_requests;
 }
